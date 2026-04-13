@@ -1,5 +1,15 @@
-import { db, collection, onSnapshot, query, orderBy, doc, getDoc, setDoc, updateDoc, increment } from "./firebase-config.js";
-import { initNavbar } from "./navbar.js";
+// Firebase Removed
+const db = {};
+const collection = () => {};
+const onSnapshot = () => {};
+const query = () => {};
+const orderBy = () => {};
+const doc = () => {};
+const getDoc = async () => ({ exists: () => false });
+const setDoc = async () => {};
+const updateDoc = async () => {};
+const increment = () => 0;
+
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavbar();
