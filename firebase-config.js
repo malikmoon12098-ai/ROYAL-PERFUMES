@@ -37,6 +37,26 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
+// Global Fallbacks for older scripts/cache
+window.db = db;
+window.auth = auth;
+window.collection = collection;
+window.doc = doc;
+window.onSnapshot = onSnapshot;
+window.getDoc = getDoc;
+window.getDocs = getDocs;
+window.setDoc = setDoc;
+window.addDoc = addDoc;
+window.updateDoc = updateDoc;
+window.deleteDoc = deleteDoc;
+window.query = query;
+window.orderBy = orderBy;
+window.where = where;
+window.increment = increment;
+window.signInWithPopup = signInWithPopup;
+window.signOut = signOut;
+window.onAuthStateChanged = onAuthStateChanged;
+
 export { 
     db, auth, provider,
     collection, doc, onSnapshot, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, query, orderBy, where, increment,

@@ -792,8 +792,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #1a1a1a; 
-    background-image: url('assets/podium.png');
+    background-color: #ffffff; 
+    /* background-image: url('assets/podium.png'); // Removed dark podium */
     background-size: cover;
     background-position: center bottom;
     border: 2px solid var(--gold);

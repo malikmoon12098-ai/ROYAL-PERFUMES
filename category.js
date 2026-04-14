@@ -1,6 +1,12 @@
-
 import { initNavbar, formatPrice } from "./navbar.js";
 import { initScrollReveal } from "./main.js";
+import { 
+    db, 
+    collection, 
+    onSnapshot, 
+    query, 
+    orderBy 
+} from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initNavbar();

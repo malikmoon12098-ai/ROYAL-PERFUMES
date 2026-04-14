@@ -1,5 +1,11 @@
-
 import { initNavbar, formatPrice } from "./navbar.js";
+import { 
+    db, 
+    doc, 
+    getDoc, 
+    collection, 
+    addDoc 
+} from "./firebase-config.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
     initNavbar();
