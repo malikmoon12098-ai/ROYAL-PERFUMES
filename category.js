@@ -230,7 +230,10 @@ function initCategoryPage() {
     function updatePriceSliderRange() {
         if (allProducts.length === 0) return;
 
-        const catProducts = allProducts.filter(p => selectedCategory === 'All' || p.cat === selectedCategory);
+        const catProducts = allProducts.filter(p => 
+            selectedCategory === 'All' || 
+            (p.cat && p.cat.toLowerCase() === selectedCategory.toLowerCase())
+        );
 
         if (catProducts.length > 0) {
             const prices = catProducts.map(p => getNumericPrice(p));
@@ -285,7 +288,7 @@ function initCategoryPage() {
         const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
         filteredProducts = allProducts.filter(p => {
-            const matchesCat = (selectedCategory === 'All' || p.cat === selectedCategory);
+            const matchesCat = (selectedCategory === 'All' || (p.cat && p.cat.toLowerCase() === selectedCategory.toLowerCase()));
             const matchesBrand = (selectedBrand === 'All' || p.brand === selectedBrand);
             const pPrice = getNumericPrice(p);
             const matchesPrice = (pPrice >= minPrice && pPrice <= maxPrice);
