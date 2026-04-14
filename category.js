@@ -160,16 +160,16 @@ function initCategoryPage() {
     }
 
     function handleMinSlider() {
-        if (parseInt(maxPriceRange.value) - parseInt(minPriceRange.value) < 10) {
-            minPriceRange.value = parseInt(maxPriceRange.value) - 10;
+        if (parseInt(maxPriceRange.value) - parseInt(minPriceRange.value) < 1) {
+            minPriceRange.value = parseInt(maxPriceRange.value) - 1;
         }
         updateSliderTrack();
         applyFilters();
     }
 
     function handleMaxSlider() {
-        if (parseInt(maxPriceRange.value) - parseInt(minPriceRange.value) < 10) {
-            maxPriceRange.value = parseInt(minPriceRange.value) + 10;
+        if (parseInt(maxPriceRange.value) - parseInt(minPriceRange.value) < 1) {
+            maxPriceRange.value = parseInt(minPriceRange.value) + 1;
         }
         updateSliderTrack();
         applyFilters();
@@ -242,12 +242,12 @@ function initCategoryPage() {
             minPriceRange.max = maxVal;
             maxPriceRange.max = maxVal;
 
-            // Set handles back to extreme if they exceed new max
-            if (parseInt(maxPriceRange.value) > maxVal || maxPriceRange.value == maxPriceRange.getAttribute('data-prev-max')) {
+            // FIX: If it's a new load or the handle was at the end, force it to the new max
+            const currentMax = parseInt(maxPriceRange.value);
+            const prevMax = parseInt(maxPriceRange.getAttribute('data-prev-max') || "0");
+            
+            if (currentMax >= prevMax || currentMax === 0) {
                 maxPriceRange.value = maxVal;
-            }
-            if (parseInt(minPriceRange.value) > maxVal) {
-                minPriceRange.value = 0;
             }
 
             maxPriceRange.setAttribute('data-prev-max', maxVal);
@@ -298,7 +298,7 @@ function initCategoryPage() {
             
             const matchesBrand = (selectedBrand === 'All' || p.brand === selectedBrand);
             const pPrice = getNumericPrice(p);
-            const matchesPrice = (pPrice >= minPrice && pPrice <= maxPrice);
+            const matchesPrice = (pPrice >= minPrice && pPrice <= (maxPrice + 1)); // Added +1 for tolerance
             const matchesStock = showInStock ? (parseFloat(p.qty) > 0) : true;
             const matchesSale = showOnSale ? (p.onSale === true) : true;
             const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
