@@ -287,19 +287,42 @@ function initCategoryPage() {
         const showOnSale = onSaleCheck.checked;
         const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
 
+        console.log(`--- Filter Debug ---`);
+        console.log(`Selected Category: "${selectedCategory}"`);
+        console.log(`Total Products to check: ${allProducts.length}`);
+
         filteredProducts = allProducts.filter(p => {
-            const matchesCat = (selectedCategory === 'All' || (p.cat && p.cat.toLowerCase() === selectedCategory.toLowerCase()));
+            const pCat = (p.cat || "").trim();
+            const sCat = (selectedCategory || "").trim();
+            const matchesCat = (sCat === 'All' || pCat.toLowerCase() === sCat.toLowerCase());
+            
             const matchesBrand = (selectedBrand === 'All' || p.brand === selectedBrand);
             const pPrice = getNumericPrice(p);
             const matchesPrice = (pPrice >= minPrice && pPrice <= maxPrice);
             const matchesStock = showInStock ? (parseFloat(p.qty) > 0) : true;
             const matchesSale = showOnSale ? (p.onSale === true) : true;
+            const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
             const matchesSearch = p.name.toLowerCase().includes(searchTerm) ||
                 (p.cat && p.cat.toLowerCase().includes(searchTerm)) ||
                 (p.brand && p.brand.toLowerCase().includes(searchTerm)) ||
                 (p.subTitle && p.subTitle.toLowerCase().includes(searchTerm));
 
-            return matchesCat && matchesBrand && matchesPrice && matchesStock && matchesSale && matchesSearch;
+            const isMatch = matchesCat && matchesBrand && matchesPrice && matchesStock && matchesSale && matchesSearch;
+
+            if (!isMatch) {
+                console.log(`Product "${p.name}" (Cat: "${pCat}", Price: ${pPrice}) EXCLUDED because:`, {
+                    CategoryMatch: matchesCat,
+                    BrandMatch: matchesBrand,
+                    PriceMatch: matchesPrice,
+                    StockMatch: matchesStock,
+                    SaleMatch: matchesSale,
+                    SearchMatch: matchesSearch
+                });
+            } else {
+                console.log(`Product "${p.name}" PASSED`);
+            }
+
+            return isMatch;
         });
 
         sortProducts();
